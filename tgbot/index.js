@@ -4,7 +4,7 @@ import express from 'express'
 import cors from 'cors'
 
 const token = process.env.TOKEN
-const webAppUrl = 'https://33dc-37-214-51-154.eu.ngrok.io'
+const webAppUrl = 'https://492d-37-214-51-154.ngrok.io'
 
 const bot = new TelegramBot(token, { polling: true })
 const app = express()
@@ -50,6 +50,7 @@ bot.on('message', async (msg) => {
 })
 
 app.post('/order', async (req, res) => {
+  console.log(req.body)
   const { queryId, products = [], totalPrice } = req.body
   try {
     await bot.answerWebAppQuery(queryId, {
@@ -57,12 +58,12 @@ app.post('/order', async (req, res) => {
       id: queryId,
       title: 'Successful Purchase',
       input_message_content: {
-        message_text: `Congratulations! You have purchased an item(s) worth $${totalPrice}, (items: ${products.map(item => item.title).join(', ')})`
+        message_text: `Congratulations!\nYou have purchased an item(s) worth $${totalPrice},\n(items: ${products.map(item => item.title).join(', ')})`
       }
     })
-    return res.status(200).json({});
+    return res.status(200).send()
   } catch (e) {
-    return res.status(500).json({})
+    return res.status(500).send()
   }
 })
 

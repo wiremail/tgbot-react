@@ -9,7 +9,7 @@ const getTotalPrice = (items = []) => {
   return items.reduce((acc, item) => acc += item.price, 0)
 }
 
-const webAppUrl = 'https://33dc-37-214-51-154.eu.ngrok.io'
+const tgBotUrl = 'https://09dd-37-214-51-154.eu.ngrok.io'
 
 const ProductList = () => {
   const [addedItems, setAddedItems] = useState([])
@@ -21,7 +21,8 @@ const ProductList = () => {
       totalPrice: getTotalPrice(addedItems),
       queryId,
     }
-    fetch('http://37.214.51.154:8000/order', {
+
+    fetch(`${tgBotUrl}/order`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
